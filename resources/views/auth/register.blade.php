@@ -236,7 +236,7 @@
                         <input type="checkbox" id="terms" name="terms" required
                             class="w-4 h-4 mt-1 rounded-md border-2 border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-800 transition-colors">
                         <label for="terms" class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed cursor-pointer">
-                            Saya menyetujui <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Syarat & Ketentuan</a> serta <a href="#" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Kebijakan Privasi</a> RTQ Kawali
+                            Saya menyetujui <a href="{{ route('dalam-pengembangan') }}" target="_blank" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Syarat & Ketentuan</a> serta <a href="{{ route('dalam-pengembangan') }}" target="_blank" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Kebijakan Privasi</a> RTQ Kawali
                         </label>
                     </div>
 

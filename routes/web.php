@@ -46,48 +46,64 @@ Route::get('/informasi-ppdb', function () {
 })->name('ppdb.info');
 
 Route::get('/ppdb/hasil-seleksi', function (Illuminate\Http\Request $request) {
-    include resource_path('views/ppdb_lama/data.php');
+    $keyword = trim($request->query('nama', ''));
+    $hasil = collect();
 
-    $keyword = $request->query('nama', '');
-    $hasil = [];
-
-    if (strlen(trim($keyword)) >= 3) {
-        $safeKeyword = strtolower(trim($keyword));
-        foreach ($santri as $s) {
-            if (str_contains(strtolower($s['nama']), $safeKeyword)) {
-                $hasil[] = $s;
-            }
-        }
+    if (strlen($keyword) >= 3) {
+        $hasil = \App\Models\PpdbRegistration::with('user')
+            ->where('hasil_seleksi_status', 'tersedia')
+            ->whereNotNull('hasil_seleksi_pdf')
+            ->where(function ($q) use ($keyword) {
+                $q->where('nama_lengkap', 'like', "%{$keyword}%")
+                  ->orWhereHas('user', function ($uq) use ($keyword) {
+                      $uq->where('name', 'like', "%{$keyword}%");
+                  });
+            })
+            ->latest()
+            ->get();
     }
+
+    $totalSantri = \App\Models\PpdbRegistration::where('hasil_seleksi_status', 'tersedia')
+        ->whereNotNull('hasil_seleksi_pdf')
+        ->count();
 
     return view('ppdb.hasil-seleksi', [
         'keyword' => $keyword,
         'hasil' => $hasil,
-        'totalSantri' => count($santri),
+        'totalSantri' => $totalSantri,
     ]);
 })->name('ppdb.hasil-seleksi');
 
-Route::get('/ppdb/download-sk', function (Illuminate\Http\Request $request) {
-    include resource_path('views/ppdb_lama/data.php');
+Route::get('/ppdb/download-sk/{id?}', function (Illuminate\Http\Request $request, $id = null) {
+    $regId = $id ?: $request->query('id');
 
-    $filename = basename($request->query('file', ''));
-    $filepath = public_path('pdf/hasil_seleksi/files/' . $filename);
+    if ($regId) {
+        $reg = \App\Models\PpdbRegistration::findOrFail($regId);
 
-    $allowed = false;
-    foreach ($santri as $s) {
-        if ($s['file'] === $filename) {
-            $allowed = true;
-            break;
+        if ($reg->hasil_seleksi_status !== 'tersedia' || !$reg->hasil_seleksi_pdf) {
+            abort(404, 'Hasil seleksi belum tersedia untuk diunduh.');
+        }
+
+        if (\Illuminate\Support\Facades\Storage::disk('ppdb')->exists($reg->hasil_seleksi_pdf)) {
+            $filename = 'Hasil_Seleksi_' . \Illuminate\Support\Str::slug($reg->nama_lengkap ?? $reg->user->name ?? 'santri') . '.pdf';
+            return \Illuminate\Support\Facades\Storage::disk('ppdb')->download($reg->hasil_seleksi_pdf, $filename, [
+                'Content-Type' => 'application/pdf',
+            ]);
         }
     }
 
-    if (!$allowed || !file_exists($filepath)) {
-        abort(404, 'File tidak ditemukan');
+    // Fallback support for legacy static file parameter if queried
+    $filename = basename($request->query('file', ''));
+    if ($filename) {
+        $filepath = public_path('pdf/hasil_seleksi/files/' . $filename);
+        if (file_exists($filepath)) {
+            return response()->download($filepath, $filename, [
+                'Content-Type' => 'application/pdf',
+            ]);
+        }
     }
 
-    return response()->download($filepath, $filename, [
-        'Content-Type' => 'application/pdf',
-    ]);
+    abort(404, 'File hasil seleksi tidak ditemukan.');
 })->name('ppdb.download-sk');
 
 // Auth Routes (Guest only)
@@ -133,8 +149,8 @@ Route::middleware(['auth', 'role:calon_santri'])->prefix('ppdb')->name('ppdb.')-
         );
     })->name('download-hasil');
 
-    // Halaman baru
-    Route::get('/hasil-seleksi', [DashboardController::class, 'hasilSeleksi'])->name('hasil-seleksi');
+    // Halaman kelulusan santri
+    Route::get('/status-kelulusan', [DashboardController::class, 'hasilSeleksi'])->name('status-kelulusan');
     Route::get('/tanggal-penting', [DashboardController::class, 'tanggalPenting'])->name('tanggal-penting');
 });
 
@@ -311,6 +327,7 @@ Route::middleware(['auth', 'role:santri'])->prefix('siakad/santri')->name('siaka
     Route::get('/dashboard', [\App\Http\Controllers\Siakad\Santri\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/perizinan', [\App\Http\Controllers\Siakad\Santri\DashboardController::class, 'perizinan'])->name('perizinan');
     Route::get('/hafalan', [\App\Http\Controllers\Siakad\Santri\HafalanController::class, 'index'])->name('hafalan');
+    Route::get('/nilai', [\App\Http\Controllers\Siakad\Santri\NilaiController::class, 'index'])->name('nilai');
 });
 
 

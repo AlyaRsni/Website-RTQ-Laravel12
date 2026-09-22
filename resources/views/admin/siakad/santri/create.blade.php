@@ -120,10 +120,29 @@
                 </select>
             </div>
 
-            {{-- RFID UID --}}
+            {{-- Stage Hafalan --}}
             <div>
                 <h4 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
                     <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-xs text-indigo-600 dark:text-indigo-400 font-bold">5</span>
+                    Stage Hafalan Al-Qur'an
+                </h4>
+                <div class="sm:w-1/2">
+                    <select name="hafalan_stage" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500">
+                        @foreach(\App\Models\Santri::STAGE_MAP as $stg => $info)
+                            <option value="{{ $stg }}" {{ old('hafalan_stage', 1) == $stg ? 'selected' : '' }}>
+                                {{ $info['label'] }} (Juz {{ implode(', ', $info['juz']) }})
+                            </option>
+                        @endforeach
+                    </select>
+                    <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-1">Tahap capaian awal hafalan santri (default: Stage 1 / Juz 30, 29, 28).</p>
+                    @error('hafalan_stage') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
+                </div>
+            </div>
+
+            {{-- RFID UID --}}
+            <div>
+                <h4 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-xs text-indigo-600 dark:text-indigo-400 font-bold">6</span>
                     Kartu RFID/NFC
                 </h4>
                 <div class="sm:w-1/2">

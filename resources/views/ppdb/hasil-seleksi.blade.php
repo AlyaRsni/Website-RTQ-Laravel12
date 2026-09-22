@@ -133,25 +133,32 @@
                                             <div class="min-w-0">
                                                 <h3
                                                     class="font-bold text-gray-900 dark:text-white text-base md:text-lg truncate">
-                                                    {{ $row['nama'] }}
+                                                    {{ $row->nama_lengkap ?? $row->user?->name ?? 'Tanpa Nama' }}
                                                 </h3>
-                                                <div class="flex items-center gap-2 mt-1">
-                                                    <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none"
-                                                        stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                                        </path>
-                                                    </svg>
-                                                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate">
-                                                        {{ $row['asal'] }}
-                                                    </p>
+                                                <div class="flex flex-wrap items-center gap-2 mt-1">
+                                                    @if(!empty($row->nomor_peserta))
+                                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-mono">
+                                                            No. {{ $row->nomor_peserta }}
+                                                        </span>
+                                                    @endif
+                                                    <div class="flex items-center gap-1.5 truncate">
+                                                        <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                                            </path>
+                                                        </svg>
+                                                        <p class="text-sm text-gray-500 dark:text-gray-400 truncate">
+                                                            {{ $row->asal_sekolah ?? '-' }}
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         {{-- Download Button --}}
-                                        <a href="{{ route('ppdb.download-sk', ['file' => $row['file']]) }}"
+                                        <a href="{{ route('ppdb.download-sk', ['id' => $row->id]) }}"
                                             class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-emerald-600 text-white text-sm font-semibold rounded-xl hover:bg-emerald-700 shadow-md shadow-emerald-600/20 hover:shadow-emerald-600/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 shrink-0 w-full sm:w-auto">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -55,6 +55,7 @@ class SantriController extends Controller
             'nama_ibu' => 'nullable|string|max:255',
             'telepon_wali' => 'nullable|string|max:20',
             'dormitory_id' => 'nullable|exists:dormitories,id',
+            'hafalan_stage' => 'nullable|integer|between:1,12',
             'rfid_uid' => 'nullable|string|max:50|unique:santris,rfid_uid',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ], [
@@ -94,6 +95,7 @@ class SantriController extends Controller
                 'nama_ibu' => $request->nama_ibu,
                 'telepon_wali' => $request->telepon_wali,
                 'dormitory_id' => $request->dormitory_id,
+                'hafalan_stage' => $request->hafalan_stage ?: 1,
                 'rfid_uid' => $request->rfid_uid ?: null,
             ]);
         });
@@ -119,15 +121,7 @@ class SantriController extends Controller
                 ->get();
         }
 
-        // Prayer attendance stats (bulan ini)
-        $prayerStats = [];
-        foreach (['subuh', 'dzuhur', 'ashar', 'maghrib', 'isya'] as $wk) {
-            $prayerStats[$wk] = \App\Models\PrayerAttendance::where('santri_id', $santri->id)
-                ->where('waktu_shalat', $wk)
-                ->whereMonth('tanggal', now()->month)
-                ->whereYear('tanggal', now()->year)
-                ->count();
-        }
+
 
         // Recent permissions
         $recentPermissions = \App\Models\SantriPermission::where('santri_id', $santri->id)
@@ -138,7 +132,7 @@ class SantriController extends Controller
 
         return view('admin.siakad.santri.show', compact(
             'santri', 'asramas', 'availableHalaqahs', 'activeSemester',
-            'prayerStats', 'recentPermissions'
+            'recentPermissions'
         ));
     }
 
@@ -158,6 +152,7 @@ class SantriController extends Controller
             'telepon_wali' => 'nullable|string|max:20',
             'dormitory_id' => 'nullable|exists:dormitories,id',
             'status' => 'required|in:aktif,nonaktif,lulus,pindah',
+            'hafalan_stage' => 'nullable|integer|between:1,12',
             'rfid_uid' => 'nullable|string|max:50|unique:santris,rfid_uid,' . $santri->id,
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
@@ -165,7 +160,7 @@ class SantriController extends Controller
         $updateData = $request->only(
             'nama_lengkap', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir',
             'asal_sekolah', 'alamat', 'nama_ayah', 'nama_ibu', 'telepon_wali',
-            'dormitory_id', 'status'
+            'dormitory_id', 'status', 'hafalan_stage'
         );
         $updateData['rfid_uid'] = $request->rfid_uid ?: null;
         $santri->update($updateData);

@@ -126,12 +126,12 @@
 
                     <p class="px-3 mt-5 mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500">Informasi</p>
 
-                    <a href="{{ route('ppdb.hasil-seleksi') }}"
+                    <a href="{{ route('ppdb.status-kelulusan') }}"
                         class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200
-                        {{ request()->routeIs('ppdb.hasil-seleksi') 
+                        {{ request()->routeIs('ppdb.status-kelulusan') 
                             ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 shadow-sm' 
                             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/60 hover:text-gray-900 dark:hover:text-white' }}">
-                        <div class="w-8 h-8 rounded-lg flex items-center justify-center {{ request()->routeIs('ppdb.hasil-seleksi') ? 'bg-blue-100 dark:bg-blue-800/40' : 'bg-gray-100 dark:bg-gray-800' }}">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center {{ request()->routeIs('ppdb.status-kelulusan') ? 'bg-blue-100 dark:bg-blue-800/40' : 'bg-gray-100 dark:bg-gray-800' }}">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         </div>
                         Hasil Seleksi

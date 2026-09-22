@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-5 divide-x divide-gray-100 dark:divide-gray-700/50">
+        <div class="grid grid-cols-2 sm:grid-cols-6 divide-x divide-gray-100 dark:divide-gray-700/50">
             <div class="px-6 py-4 text-center">
                 <p class="text-xs text-gray-500 dark:text-gray-400">TTL</p>
                 <p class="text-sm font-semibold text-gray-900 dark:text-white mt-1">{{ $santri->tempat_lahir ?? '-' }}, {{ $santri->tanggal_lahir ? $santri->tanggal_lahir->format('d M Y') : '-' }}</p>
@@ -93,6 +93,12 @@
             <div class="px-6 py-4 text-center">
                 <p class="text-xs text-gray-500 dark:text-gray-400">Telepon Wali</p>
                 <p class="text-sm font-semibold text-gray-900 dark:text-white mt-1">{{ $santri->telepon_wali ?? '-' }}</p>
+            </div>
+            <div class="px-6 py-4 text-center">
+                <p class="text-xs text-gray-500 dark:text-gray-400">Stage Hafalan</p>
+                <p class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 mt-1">
+                    {{ $santri->stage_info ? $santri->stage_info->label . ' (' . $santri->stage_info->juz_label . ')' : 'Stage 1' }}
+                </p>
             </div>
             <div class="px-6 py-4 text-center">
                 <p class="text-xs text-gray-500 dark:text-gray-400">RFID/NFC</p>
@@ -251,10 +257,28 @@
                     </select>
                 </div>
 
+                {{-- Stage Hafalan --}}
+                <div>
+                    <h4 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-xs text-indigo-600 dark:text-indigo-400 font-bold">4</span>
+                        Stage Hafalan Al-Qur'an
+                    </h4>
+                    <div class="sm:w-1/2">
+                        <select name="hafalan_stage" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 text-gray-900 dark:text-white">
+                            @foreach(\App\Models\Santri::STAGE_MAP as $stg => $info)
+                                <option value="{{ $stg }}" {{ old('hafalan_stage', $santri->hafalan_stage ?? 1) == $stg ? 'selected' : '' }}>
+                                    {{ $info['label'] }} (Juz {{ implode(', ', $info['juz']) }})
+                                </option>
+                            @endforeach
+                        </select>
+                        <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-1">Tahap capaian target hafalan santri.</p>
+                    </div>
+                </div>
+
                 {{-- RFID/NFC UID --}}
                 <div>
                     <h4 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-lg bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center text-xs text-cyan-600 dark:text-cyan-400 font-bold">4</span>
+                        <span class="w-6 h-6 rounded-lg bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center text-xs text-cyan-600 dark:text-cyan-400 font-bold">5</span>
                         Kartu RFID / NFC
                     </h4>
                     <div class="sm:w-1/2">
@@ -391,27 +415,7 @@
         </div>
     </div>
 
-    {{-- ═══ Kehadiran Shalat Berjamaah (bulan ini) ═══ --}}
-    <div class="bg-white dark:bg-gray-800/60 rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6">
-        <h3 class="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center"><svg class="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>
-            Shalat Berjamaah — {{ now()->translatedFormat('F Y') }}
-        </h3>
-        <div class="grid grid-cols-5 gap-3">
-            @foreach(['subuh' => '🌅', 'dzuhur' => '☀️', 'ashar' => '🌤️', 'maghrib' => '🌇', 'isya' => '🌙'] as $key => $emoji)
-            @php $pct = now()->day > 0 ? round(($prayerStats[$key] ?? 0) / now()->day * 100) : 0; @endphp
-            <div class="text-center p-3 bg-gray-50 dark:bg-gray-900/30 rounded-xl">
-                <span class="text-lg">{{ $emoji }}</span>
-                <p class="text-xl font-extrabold text-gray-900 dark:text-white mt-1">{{ $prayerStats[$key] ?? 0 }}</p>
-                <p class="text-[10px] text-gray-400 dark:text-gray-500">{{ ucfirst($key) }}</p>
-                <div class="mt-1.5 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                    <div class="h-full rounded-full {{ $pct >= 80 ? 'bg-emerald-500' : ($pct >= 50 ? 'bg-amber-500' : 'bg-red-400') }}" style="width: {{ $pct }}%"></div>
-                </div>
-                <p class="text-[9px] text-gray-400 mt-0.5">{{ $pct }}%</p>
-            </div>
-            @endforeach
-        </div>
-    </div>
+
 
     {{-- ═══ Perizinan Terbaru ═══ --}}
     <div class="bg-white dark:bg-gray-800/60 rounded-2xl border border-gray-200 dark:border-gray-700/50 p-6">
