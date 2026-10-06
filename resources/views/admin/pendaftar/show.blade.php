@@ -140,6 +140,7 @@
                     ['label' => 'Kartu Keluarga', 'field' => 'kartu_keluarga', 'type' => 'kartu_keluarga'],
                     ['label' => 'Foto 3x4', 'field' => 'foto_3x4', 'type' => 'foto_3x4'],
                     ['label' => 'Ijazah/Raport', 'field' => 'ijazah_raport', 'type' => 'ijazah_raport'],
+                    ['label' => 'Surat Kelakuan Baik', 'field' => 'surat_kelakuan_baik', 'type' => 'surat_kelakuan_baik'],
                 ];
             @endphp
             @foreach($files as $file)

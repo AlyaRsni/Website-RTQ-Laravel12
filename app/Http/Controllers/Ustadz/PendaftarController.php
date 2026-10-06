@@ -12,7 +12,7 @@ class PendaftarController extends Controller
 {
     public function index(Request $request)
     {
-        $query = PpdbRegistration::with('user')->whereNotNull('finalisasi_at');
+        $query = PpdbRegistration::with('user');
 
         if ($search = $request->get('search')) {
             $query->where(function ($q) use ($search) {
@@ -83,6 +83,7 @@ class PendaftarController extends Controller
             'kartu_keluarga' => 'kartu_keluarga',
             'foto_3x4' => 'foto_3x4',
             'ijazah_raport' => 'ijazah_raport',
+            'surat_kelakuan_baik' => 'surat_kelakuan_baik',
         ];
 
         if (!isset($fieldMap[$type]) || !$registration->{$fieldMap[$type]}) {
@@ -112,6 +113,7 @@ class PendaftarController extends Controller
             'kartu_keluarga' => 'kartu_keluarga',
             'foto_3x4' => 'foto_3x4',
             'ijazah_raport' => 'ijazah_raport',
+            'surat_kelakuan_baik' => 'surat_kelakuan_baik',
         ];
 
         if (!isset($fieldMap[$type]) || !$registration->{$fieldMap[$type]}) {

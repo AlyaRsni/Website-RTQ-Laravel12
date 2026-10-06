@@ -140,6 +140,7 @@
                         ['label' => 'Kartu Keluarga', 'file' => $registration->kartu_keluarga, 'icon' => '📄'],
                         ['label' => 'Foto 3x4', 'file' => $registration->foto_3x4, 'icon' => '📷'],
                         ['label' => 'Ijazah / Raport', 'file' => $registration->ijazah_raport, 'icon' => '📜'],
+                        ['label' => 'Surat Keterangan Kelakuan Baik', 'file' => $registration->surat_kelakuan_baik, 'icon' => '📝'],
                     ];
                 @endphp
                 @foreach($berkas as $doc)

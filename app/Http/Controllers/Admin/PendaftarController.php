@@ -50,6 +50,7 @@ class PendaftarController extends Controller
         if ($registration->kartu_keluarga) Storage::disk('ppdb')->delete($registration->kartu_keluarga);
         if ($registration->foto_3x4) Storage::disk('ppdb')->delete($registration->foto_3x4);
         if ($registration->ijazah_raport) Storage::disk('ppdb')->delete($registration->ijazah_raport);
+        if ($registration->surat_kelakuan_baik) Storage::disk('ppdb')->delete($registration->surat_kelakuan_baik);
         if ($registration->hasil_seleksi_pdf) Storage::disk('ppdb')->delete($registration->hasil_seleksi_pdf);
 
         $user->delete(); // cascade deletes registration
@@ -103,6 +104,7 @@ class PendaftarController extends Controller
             'kartu_keluarga' => 'kartu_keluarga',
             'foto_3x4' => 'foto_3x4',
             'ijazah_raport' => 'ijazah_raport',
+            'surat_kelakuan_baik' => 'surat_kelakuan_baik',
         ];
 
         if (!isset($fieldMap[$type]) || !$registration->{$fieldMap[$type]}) {
@@ -132,6 +134,7 @@ class PendaftarController extends Controller
             'kartu_keluarga' => 'kartu_keluarga',
             'foto_3x4' => 'foto_3x4',
             'ijazah_raport' => 'ijazah_raport',
+            'surat_kelakuan_baik' => 'surat_kelakuan_baik',
         ];
 
         if (!isset($fieldMap[$type]) || !$registration->{$fieldMap[$type]}) {

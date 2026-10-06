@@ -43,6 +43,7 @@ class Step4Controller extends Controller
             'kartu_keluarga' => ($isDraft ? 'nullable' : ($registration->kartu_keluarga ? 'nullable' : 'required')) . '|file|mimes:pdf|max:10240',
             'foto_3x4' => ($isDraft ? 'nullable' : ($registration->foto_3x4 ? 'nullable' : 'required')) . '|file|mimes:jpg,jpeg|max:10240',
             'ijazah_raport' => ($isDraft ? 'nullable' : ($registration->ijazah_raport ? 'nullable' : 'required')) . '|file|mimes:pdf|max:10240',
+            'surat_kelakuan_baik' => ($isDraft ? 'nullable' : ($registration->surat_kelakuan_baik ? 'nullable' : 'required')) . '|file|mimes:pdf|max:10240',
         ];
 
         $messages = [
@@ -55,6 +56,9 @@ class Step4Controller extends Controller
             'ijazah_raport.required' => 'Ijazah/Raport wajib diupload.',
             'ijazah_raport.mimes' => 'Ijazah/Raport harus berformat PDF.',
             'ijazah_raport.max' => 'Ukuran file maksimal 10MB.',
+            'surat_kelakuan_baik.required' => 'Surat Keterangan Kelakuan Baik wajib diupload.',
+            'surat_kelakuan_baik.mimes' => 'Surat Keterangan Kelakuan Baik harus berformat PDF.',
+            'surat_kelakuan_baik.max' => 'Ukuran file maksimal 10MB.',
         ];
 
         $request->validate($rules, $messages);
@@ -87,16 +91,25 @@ class Step4Controller extends Controller
                 ->storeAs($userId, 'ijazah_raport.pdf', 'ppdb');
         }
 
+        if ($request->hasFile('surat_kelakuan_baik')) {
+            if ($registration->surat_kelakuan_baik) {
+                Storage::disk('ppdb')->delete($registration->surat_kelakuan_baik);
+            }
+            $updates['surat_kelakuan_baik'] = $request->file('surat_kelakuan_baik')
+                ->storeAs($userId, 'surat_kelakuan_baik.pdf', 'ppdb');
+        }
+
         // Determine status
         $reg = $registration->fresh();
         $hasKk = isset($updates['kartu_keluarga']) || $reg->kartu_keluarga;
         $hasFoto = isset($updates['foto_3x4']) || $reg->foto_3x4;
         $hasIjazah = isset($updates['ijazah_raport']) || $reg->ijazah_raport;
+        $hasSkkb = isset($updates['surat_kelakuan_baik']) || $reg->surat_kelakuan_baik;
 
         if ($isDraft) {
-            $updates['status_berkas'] = ($hasKk || $hasFoto || $hasIjazah) ? 'draft' : 'belum_upload';
+            $updates['status_berkas'] = ($hasKk || $hasFoto || $hasIjazah || $hasSkkb) ? 'draft' : 'belum_upload';
         } else {
-            $updates['status_berkas'] = ($hasKk && $hasFoto && $hasIjazah) ? 'selesai' : 'draft';
+            $updates['status_berkas'] = ($hasKk && $hasFoto && $hasIjazah && $hasSkkb) ? 'selesai' : 'draft';
         }
 
         $registration->update($updates);

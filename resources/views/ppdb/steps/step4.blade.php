@@ -17,7 +17,7 @@
                 <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1">Ketentuan Upload Berkas</h3>
                 <ul class="text-xs text-gray-600 dark:text-gray-400 space-y-1">
                     <li>• Ukuran maksimal setiap file: <strong>10 MB</strong></li>
-                    <li>• Kartu Keluarga & Ijazah/Raport: format <strong>PDF</strong></li>
+                    <li>• Kartu Keluarga, Ijazah/Raport & Surat Keterangan Kelakuan Baik: format <strong>PDF</strong></li>
                     <li>• Foto 3x4: format <strong>JPG/JPEG</strong></li>
                 </ul>
             </div>
@@ -46,6 +46,7 @@
                     ['key' => 'kartu_keluarga', 'label' => 'Kartu Keluarga', 'accept' => '.pdf', 'format' => 'PDF', 'icon_color' => 'emerald', 'current' => $registration->kartu_keluarga],
                     ['key' => 'foto_3x4', 'label' => 'Foto 3x4', 'accept' => '.jpg,.jpeg', 'format' => 'JPG/JPEG', 'icon_color' => 'blue', 'current' => $registration->foto_3x4],
                     ['key' => 'ijazah_raport', 'label' => 'Ijazah / Raport', 'accept' => '.pdf', 'format' => 'PDF', 'icon_color' => 'purple', 'current' => $registration->ijazah_raport],
+                    ['key' => 'surat_kelakuan_baik', 'label' => 'Surat Keterangan Kelakuan Baik', 'accept' => '.pdf', 'format' => 'PDF', 'icon_color' => 'amber', 'current' => $registration->surat_kelakuan_baik],
                 ];
             @endphp
 

@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Tanggal Penting — Dashboard PPDB')
-@section('page_title', 'Tanggal Penting')
-@section('page_subtitle', 'Jadwal dan agenda pendaftaran Santri Baru')
+@section('title', 'Informasi Penting — Dashboard PPDB')
+@section('page_title', 'Informasi Penting')
+@section('page_subtitle', 'Informasi dan agenda penting pendaftaran Santri Baru')
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">
@@ -14,9 +14,9 @@
         
         <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
             <div class="text-white">
-                <h2 class="text-2xl font-extrabold tracking-tight">Timeline Pendaftaran</h2>
+                <h2 class="text-2xl font-extrabold tracking-tight">Informasi Penting</h2>
                 <p class="mt-2 text-indigo-100 text-sm leading-relaxed max-w-md">
-                    Berikut adalah jadwal lengkap kegiatan Penerimaan Peserta Didik Baru (PPDB) Pondok Pesantren RTQ Kawali. Pastikan Anda tidak melewatkan setiap tahapannya.
+                    Berikut adalah informasi penting mengenai jadwal dan tahapan Penerimaan Peserta Didik Baru (PPDB) Pondok Pesantren RTQ Kawali yang perlu Anda perhatikan.
                 </p>
             </div>
             <div class="shrink-0 w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/20">
