@@ -53,7 +53,7 @@
                     <li><a href="#program" class="hover:text-blue-400 transition">Program Unggulan</a></li>
                     <li><a href="#fasilitas" class="hover:text-blue-400 transition">Fasilitas</a></li>
                     <li><a href="{{ route('ppdb.info') }}" class="hover:text-blue-400 transition">Informasi PPDB</a></li>
-                    <li><a href="{{ route('ppdb.ditutup') }}" class="hover:text-blue-400 transition">Pendaftaran PPDB</a></li>
+                    <li><a href="{{ route('ppdb.belum-dibuka') }}" class="hover:text-blue-400 transition">Pendaftaran PPDB</a></li>
                     <li><a href="{{ route('login') }}" class="hover:text-blue-400 transition">Login Santri</a></li>
                 </ul>
             </div>

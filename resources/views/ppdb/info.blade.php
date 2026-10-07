@@ -3,6 +3,16 @@
 @section('title', 'Informasi PPDB — RTQ Kawali')
 
 @section('content')
+    {{-- Style lokal untuk elemen hero (tahan Dark Mode & tidak terpengaruh build Tailwind) --}}
+    <style>
+        @keyframes ppdb-ping {
+            0% { transform: scale(1); opacity: .8; }
+            75%, 100% { transform: scale(2.4); opacity: 0; }
+        }
+        .ppdb-ping { animation: ppdb-ping 1.4s cubic-bezier(0, 0, .2, 1) infinite; }
+        .ppdb-cta:hover { transform: scale(1.03); box-shadow: 0 25px 35px -8px rgba(245, 158, 11, .5) !important; }
+    </style>
+
     @include('partials.navbar')
 
     {{-- Hero Section --}}
@@ -20,11 +30,18 @@
         <div class="absolute bottom-16 left-16 w-20 h-20 border border-white/5 rounded-2xl -rotate-6 hidden lg:block"></div>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-            <span
-                class="inline-flex items-center gap-2 py-2 px-5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 text-red-100 text-sm font-semibold tracking-wider uppercase mb-8 animate-[fadeInUp_0.6s_ease-out]">
-                <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
-                Pendaftaran Telah Ditutup
-            </span>
+            {{-- Badge Pendaftaran Dibuka 1 November (Inline style agar kebal terhadap dark mode & hosting) --}}
+            <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <span
+                    style="display: inline-flex; align-items: center; gap: 0.65rem; padding: 0.5rem 1.25rem; border-radius: 9999px; background-color: rgba(251, 191, 36, 0.15); border: 1px solid rgba(251, 191, 36, 0.45); color: #fde68a; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.25rem;">
+                    <span style="position: relative; display: inline-flex; width: 0.55rem; height: 0.55rem;">
+                        <span class="ppdb-ping" style="position: absolute; inset: 0; border-radius: 9999px; background-color: #fbbf24;"></span>
+                        <span style="position: relative; display: inline-block; width: 0.55rem; height: 0.55rem; border-radius: 9999px; background-color: #fbbf24;"></span>
+                    </span>
+                    Pendaftaran Dibuka 1 November 2026
+                </span>
+            </div>
+
             <h1 class="text-4xl md:text-4xl lg:text-6xl font-extrabold text-white tracking-[-0.03em] mb-6 leading-[1.05]">
                 Penerimaan Peserta<br /><span
                     class="bg-linear-to-r from-amber-300 via-amber-400 to-yellow-300 bg-clip-text text-transparent">Didik
@@ -33,18 +50,16 @@
             <p class="mt-6 text-sm md:text-xl text-blue-200/80 max-w-2xl mx-auto font-light leading-relaxed">
                 Bergabunglah bersama kami membentuk generasi Qur'ani yang berakhlak mulia, cerdas, dan mandiri.
             </p>
-            <div class="mt-12 flex flex-col sm:flex-row justify-center gap-4">
-                <a href="{{ route('ppdb.ditutup') }}"
-                    class="group px-8 py-4 text-sm font-bold text-white bg-red-600 rounded-2xl shadow-xl shadow-red-500/20 hover:bg-red-700 hover:scale-[1.03] transition-all duration-300 flex items-center justify-center gap-2">
-                    Pendaftaran Ditutup
-                    <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+
+            {{-- Tombol Daftar PPDB (Inline style & Hapus Tombol Hasil Seleksi Gelombang 1) --}}
+            <div style="margin-top: 3rem; display: flex; justify-content: center;">
+                <a href="{{ route('ppdb.belum-dibuka') }}" class="ppdb-cta"
+                    style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem 2.25rem; border-radius: 1rem; background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%); color: #111827; font-size: 0.95rem; font-weight: 800; text-decoration: none; box-shadow: 0 20px 25px -5px rgba(245, 158, 11, 0.35); transition: transform 0.25s ease, box-shadow 0.25s ease;">
+                    Daftar PPDB (Belum Dibuka)
+                    <svg style="width: 1.1rem; height: 1.1rem; color: #111827; margin-left: 0.25rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                </a>
-                <a href="{{ route('ppdb.hasil-seleksi') }}"
-                    class="px-8 py-4 text-sm font-bold text-white bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl hover:bg-white/20 transition-all duration-300">
-                    Hasil Seleksi Gelombang 1
                 </a>
             </div>
         </div>
@@ -79,11 +94,11 @@
                     <span
                         class="text-xs font-semibold text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Berkas</span>
                 </a>
-                <a href="#perlengkapan"
+                <a href="#fasilitas"
                     class="group flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-blue-50 dark:hover:bg-gray-800 transition-all duration-200">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">🎒</span>
+                    <span class="text-2xl group-hover:scale-110 transition-transform">🕌</span>
                     <span
-                        class="text-xs font-semibold text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Perlengkapan</span>
+                        class="text-xs font-semibold text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Fasilitas</span>
                 </a>
                 <a href="#biaya"
                     class="group flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-blue-50 dark:hover:bg-gray-800 transition-all duration-200">
@@ -91,17 +106,17 @@
                     <span
                         class="text-xs font-semibold text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Biaya</span>
                 </a>
+                <a href="#info-tambahan"
+                    class="group flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-blue-50 dark:hover:bg-gray-800 transition-all duration-200">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">ℹ️</span>
+                    <span
+                        class="text-xs font-semibold text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Info Lain</span>
+                </a>
                 <a href="#kontak"
                     class="group flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-blue-50 dark:hover:bg-gray-800 transition-all duration-200">
                     <span class="text-2xl group-hover:scale-110 transition-transform">📞</span>
                     <span
                         class="text-xs font-semibold text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Kontak</span>
-                </a>
-                <a href="#faq"
-                    class="group flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-blue-50 dark:hover:bg-gray-800 transition-all duration-200">
-                    <span class="text-2xl group-hover:scale-110 transition-transform">❓</span>
-                    <span
-                        class="text-xs font-semibold text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">FAQ</span>
                 </a>
             </div>
         </div>
@@ -117,115 +132,136 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Penjadwalan Penting
                 </h2>
                 <p class="mt-4 text-sm lg:text-lg text-gray-600 dark:text-gray-400">Catat tanggal-tanggal penting berikut
-                    agar tidak
-                    tertinggal.</p>
+                    agar tidak tertinggal.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {{-- 1. Daftar Online --}}
                 <div
                     class="bg-white dark:bg-gray-900 p-8 rounded-3xl shadow-[0_10px_40px_rgba(0,32,69,0.05)] transform transition hover:-translate-y-2">
                     <div class="w-14 h-14 bg-blue-50 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6">
                         <span class="text-2xl">📝</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Pendaftaran Online</h3>
-                    <p class="text-blue-600 dark:text-blue-400 font-semibold mb-4">1 Februari - 31 Maret 2026</p>
-                    <p class="text-gray-600 dark:text-gray-400 line-clamp-3">Pengisian formulir pendaftaran secara online
-                        melalui website resmi RTQ Kawali.</p>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Daftar Online</h3>
+                    <p class="text-blue-600 dark:text-blue-400 font-semibold mb-4">01 - 30 November 2026</p>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Pengisian formulir pendaftaran, upload berkas, dan
+                        bukti transfer secara online melalui website resmi RTQ Kawali.</p>
                 </div>
+                {{-- 2. Seleksi Masuk & Interview Orang Tua --}}
                 <div
                     class="bg-white dark:bg-gray-900 p-8 rounded-3xl shadow-[0_10px_40px_rgba(0,32,69,0.05)] transform transition hover:-translate-y-2">
                     <div
                         class="w-14 h-14 bg-amber-50 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-6">
                         <span class="text-2xl">✍️</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Seleksi & Wawancara</h3>
-                    <p class="text-amber-600 dark:text-amber-400 font-semibold mb-4">4 April 2026</p>
-                    <p class="text-gray-600 dark:text-gray-400">Tes Al-Qur'an dan wawancara calon santri beserta
-                        orang tua </p>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Seleksi Masuk & Interview Orang Tua</h3>
+                    <p class="text-amber-600 dark:text-amber-400 font-semibold mb-4">27 Desember 2026</p>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Tes Al-Qur'an dan wawancara calon santri beserta
+                        sesi interview bersama orang tua santri.</p>
                 </div>
+                {{-- 3. Pengumuman Kelulusan --}}
                 <div
                     class="bg-white dark:bg-gray-900 p-8 rounded-3xl shadow-[0_10px_40px_rgba(0,32,69,0.05)] transform transition hover:-translate-y-2">
                     <div
                         class="w-14 h-14 bg-green-50 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mb-6">
                         <span class="text-2xl">🎉</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Pengumuman Kelulusan</h3>
-                    <p class="text-green-600 dark:text-green-400 font-semibold mb-4">15 April 2026</p>
-                    <p class="text-gray-600 dark:text-gray-400">Pengumuman hasil seleksi dapat diakses melalui Website resmi
-                        kami di <a href="www.rtqkawali.com" class="text-bold">www.rtqkawali.com</a>.</p>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Pengumuman Hasil Seleksi</h3>
+                    <p class="text-green-600 dark:text-green-400 font-semibold mb-4">4 Januari 2027</p>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Pengumuman hasil seleksi dapat diakses melalui website resmi
+                        kami di <a href="/" class="font-bold underline text-blue-600 dark:text-blue-400">rtqkawali.com</a>.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    {{-- Alur Kegiatan --}}
-    <section id="alur" class="py-24 bg-white dark:bg-gray-900 scroll-mt-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-16 md:flex justify-between items-end">
-                <div class="max-w-2xl">
-                    <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">Alur
-                        Kegiatan</h2>
-                    <p class="text-sm lg:text-lg text-gray-600 dark:text-gray-400">Pahami setiap tahapan proses penerimaan
-                        peserta
-                        didik baru dari awal hingga akhir.</p>
-                </div>
+    {{-- Alur Pendaftaran (Simetris & Rapi) --}}
+    <section id="alur" class="py-24 bg-white dark:bg-gray-900 scroll-mt-24 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 max-w-2xl mx-auto">
+                <span class="inline-block px-4 py-1.5 mb-3 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold uppercase tracking-widest">Tahapan Pendaftaran</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">Alur Pendaftaran</h2>
+                <p class="text-sm lg:text-lg text-gray-600 dark:text-gray-400">Ikuti 5 langkah berikut untuk mendaftar sebagai santri baru di RTQ Kawali.</p>
             </div>
 
-            <div class="relative">
-                <div
-                    class="hidden md:block absolute top-[45px] left-0 w-full h-[2px] bg-linear-to-r from-blue-100 via-blue-500 to-blue-100 dark:from-gray-800 dark:via-blue-600 dark:to-gray-800">
+            @php
+                $langkahDaftar = [
+                    [
+                        'nomor' => '01',
+                        'icon' => '👤',
+                        'judul' => 'Buat Akun Calon Santri',
+                        'isi' => 'Buat akun sebagai Calon Santri Baru di website rtqkawali.com melalui formulir registrasi.',
+                    ],
+                    [
+                        'nomor' => '02',
+                        'icon' => '🔐',
+                        'judul' => 'Login Akun Santri',
+                        'isi' => 'Masuk (Login) menggunakan nomor telepon dan password yang telah didaftarkan sebelumnya.',
+                    ],
+                    [
+                        'nomor' => '03',
+                        'icon' => '📝',
+                        'judul' => 'Isi Data Diri & Upload Berkas',
+                        'isi' => 'Lengkapi data diri, data orang tua, upload dokumen persyaratan, dan upload bukti transfer pembayaran pendaftaran.',
+                    ],
+                    [
+                        'nomor' => '04',
+                        'icon' => '⏳',
+                        'judul' => 'Tunggu Verifikasi Data',
+                        'isi' => 'Data dan berkas pendaftaran akan diperiksa dan diverifikasi secara teliti oleh Tim Verifikator PPDB.',
+                    ],
+                    [
+                        'nomor' => '05',
+                        'icon' => '🎫',
+                        'judul' => 'Status Terverifikasi & Nomor Peserta',
+                        'isi' => 'Setelah berhasil diverifikasi, Anda akan mendapatkan Nomor Peserta resmi untuk mengikuti tes seleksi.',
+                    ],
+                ];
+            @endphp
+
+            {{-- List Stepper Simetris (Sama Lebar & Terpusat Sempurna) --}}
+            <div class="space-y-3">
+                @foreach ($langkahDaftar as $index => $step)
+                    <div class="flex items-start gap-4 sm:gap-6 p-5 sm:p-6 bg-gray-50 dark:bg-gray-800/60 rounded-3xl border border-gray-100 dark:border-gray-700/60 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all duration-200">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white flex flex-col items-center justify-center shrink-0 shadow-md"
+                            style="background: linear-gradient(135deg, #002045 0%, #0a3d6e 100%);">
+                            <span class="text-base sm:text-lg font-black text-amber-300 leading-none">{{ $step['nomor'] }}</span>
+                        </div>
+                        <div class="flex-1 pt-0.5">
+                            <div class="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-lg">{{ $step['icon'] }}</span>
+                                    <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ $step['judul'] }}</h3>
+                                </div>
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100/80 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200/50 dark:border-blue-800/50">Langkah {{ $index + 1 }}</span>
+                            </div>
+                            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">{{ $step['isi'] }}</p>
+                        </div>
+                    </div>
+
+                    @if (!$loop->last)
+                        <div class="flex justify-center -my-1">
+                            <div class="w-7 h-7 rounded-full bg-blue-50 dark:bg-gray-800/80 flex items-center justify-center text-blue-500 dark:text-blue-400 border border-blue-100 dark:border-gray-700">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+
+            {{-- Catatan Penting Simetris --}}
+            <div class="mt-8 flex items-start gap-4 p-6 rounded-3xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50">
+                <div class="w-10 h-10 rounded-xl bg-amber-400 text-gray-950 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-gray-950" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
-                    <div class="relative z-10 bg-white dark:bg-gray-900 pt-6 md:pt-0 group">
-                        <div
-                            class="w-24 h-24 mx-auto md:mx-0 bg-blue-50 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6 shadow-sm border-4 border-white dark:border-gray-900 group-hover:scale-110 transition-transform">
-                            <span class="text-[#002045] dark:text-blue-400 text-2xl font-bold">01</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 text-center md:text-left">Daftar
-                            Online
-                        </h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-center md:text-left">Calon santri mengisi data diri
-                            dan mengupload berkas pada form yang telah ditentukan</p>
-                    </div>
-
-                    <div class="relative z-10 bg-white dark:bg-gray-900 pt-6 md:pt-0 group">
-                        <div
-                            class="w-24 h-24 mx-auto md:mx-0 bg-blue-50 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6 shadow-sm border-4 border-white dark:border-gray-900 group-hover:scale-110 transition-transform">
-                            <span class="text-[#002045] dark:text-blue-400 text-2xl font-bold">02</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 text-center md:text-left">Seleksi
-                            masuk</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-center md:text-left">Calon peserta mengikuti tes
-                            seleksi masuk sesuai dengan jadwal yang telah ditentukan.
-                            <br> <span class="font-bold">( 04 April 2026 | Offline | MTQ
-                                Ubay Bin Kaab)</span>
-                        </p>
-                    </div>
-
-                    <div class="relative z-10 bg-white dark:bg-gray-900 pt-6 md:pt-0 group">
-                        <div
-                            class="w-24 h-24 mx-auto md:mx-0 bg-blue-50 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6 shadow-sm border-4 border-white dark:border-gray-900 group-hover:scale-110 transition-transform">
-                            <span class="text-[#002045] dark:text-blue-400 text-2xl font-bold">03</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 text-center md:text-left">Interview
-                            Orangtua</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-center md:text-left">Orangtua mengikuti sesi
-                            wawancara untuk memastikan kesesuaian program dengan kebutuhan calon peserta. <br> <span
-                                class="font-bold">( 04 April 2026 | Offline | MTQ
-                                Ubay Bin Kaab)</span></p>
-                    </div>
-
-                    <div class="relative z-10 bg-white dark:bg-gray-900 pt-6 md:pt-0 group">
-                        <div
-                            class="w-24 h-24 mx-auto md:mx-0 bg-blue-50 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6 shadow-sm border-4 border-white dark:border-gray-900 group-hover:scale-110 transition-transform">
-                            <span class="text-[#002045] dark:text-blue-400 text-2xl font-bold">04</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 text-center md:text-left">
-                            Pengumuman
-                        </h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-center md:text-left">Cek status kelulusan setelah
-                            mengikuti seleksi dan wawancara.</p>
-                    </div>
+                <div>
+                    <h3 class="font-bold text-amber-950 dark:text-amber-200 mb-1">Catatan Penting</h3>
+                    <p class="text-sm sm:text-base text-amber-900 dark:text-amber-300/90 leading-relaxed">
+                        Simpan baik-baik nomor HP dan password akun Anda. <strong>Akun ini akan digunakan kembali untuk mengunduh dokumen Hasil Seleksi</strong> setelah pengumuman kelulusan.
+                    </p>
                 </div>
             </div>
         </div>
@@ -337,7 +373,7 @@
                                 <span class="text-white text-sm font-bold">1</span>
                             </div>
                             <p class="text-blue-50 text-lg">Kartu Keluarga - dengan kualitas gambar yang jelas, dengan
-                                format jpg, ukuran tidak lebih dari 1 MB</p>
+                                format PDF, ukuran tidak lebih dari 1 MB</p>
                         </li>
                         <li class="flex items-start gap-4">
                             <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-1">
@@ -358,7 +394,7 @@
                             <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-1">
                                 <span class="text-white text-sm font-bold">4</span>
                             </div>
-                            <p class="text-blue-50 text-lg">Bukti Uang Transaksi pendaftaran - dalam format jpg, ukuran
+                            <p class="text-blue-50 text-lg">Bukti Uang Transaksi pendaftaran - dalam format PDF, ukuran
                                 tidak lebih dari 1 MB</p>
                         </li>
                     </ul>
@@ -448,6 +484,69 @@
         </div>
     </section>
 
+    {{-- Fasilitas Pondok --}}
+    <section id="fasilitas" class="py-24 scroll-mt-24 relative overflow-hidden bg-linear-to-br from-[#001233] via-[#002045] to-[#0a3d6e]">
+        <div class="absolute top-10 left-10 w-72 h-72 bg-blue-500/15 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-amber-400/10 rounded-full blur-[120px]"></div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 max-w-3xl mx-auto">
+                <span class="inline-block px-4 py-1.5 mb-3 rounded-full bg-white/10 border border-white/15 text-amber-300 text-xs font-bold uppercase tracking-widest">Kenyamanan Santri</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">Fasilitas Pondok</h2>
+                <p class="text-sm lg:text-lg text-blue-200/80">Fasilitas yang disediakan untuk mendukung kelancaran ibadah, belajar, dan kenyamanan santri.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {{-- 1. Masjid (Fitur Utama - Span 2 di desktop agar simetris 3 + 3 = 6 slot) --}}
+                <div class="group sm:col-span-2 relative rounded-3xl p-8 lg:p-10 bg-linear-to-br from-amber-400/20 to-amber-600/5 border border-amber-300/30 overflow-hidden hover:-translate-y-1 transition-all duration-300">
+                    <div class="absolute -right-8 -bottom-8 text-8xl lg:text-9xl opacity-10 select-none group-hover:scale-110 transition-transform duration-500">🕌</div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 rounded-2xl bg-amber-400 text-gray-950 flex items-center justify-center mb-6 shadow-lg shadow-amber-500/30">
+                            <span class="text-3xl">🕌</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Masjid Pondok</h3>
+                        <p class="text-blue-100/80 leading-relaxed max-w-lg">Pusat shalat berjamaah 5 waktu, halaqah tahfidz Al-Qur'an harian, kajian kitab, dan ta'lim santri dalam suasana khusyuk.</p>
+                    </div>
+                </div>
+
+                {{-- 2. Asrama Nyaman & Kamar Mandi --}}
+                <div class="group rounded-3xl p-8 bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="text-2xl">🏠</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Asrama & Kamar Mandi</h3>
+                    <p class="text-sm text-blue-100/70 leading-relaxed">Kamar asrama yang bersih, sirkulasi udara baik, dan dilengkapi sarana kamar mandi yang memadai.</p>
+                </div>
+
+                {{-- 3. Ranjang & Kasur --}}
+                <div class="group rounded-3xl p-8 bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="text-2xl">🛏️</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Ranjang & Kasur</h3>
+                    <p class="text-sm text-blue-100/70 leading-relaxed">Setiap santri mendapatkan fasilitas ranjang dan kasur pribadi untuk istirahat yang berkualitas.</p>
+                </div>
+
+                {{-- 4. Makan 3x Sehari --}}
+                <div class="group rounded-3xl p-8 bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="text-2xl">🍽️</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Makan 3x Sehari</h3>
+                    <p class="text-sm text-blue-100/70 leading-relaxed">Penyediaan menu makanan harian yang sehat, bersih, dan bergizi secara rutin 3 kali sehari.</p>
+                </div>
+
+                {{-- 5. Sarana Olahraga --}}
+                <div class="group rounded-3xl p-8 bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <span class="text-2xl">⚽</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Sarana Olahraga</h3>
+                    <p class="text-sm text-blue-100/70 leading-relaxed">Area sarana olahraga untuk menjaga kesehatan, kebugaran fisik, dan refreshing para santri.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- Perlengkapan --}}
     <section id="perlengkapan" class="py-24 bg-white dark:bg-gray-900 scroll-mt-24 relative overflow-hidden">
         <div class="absolute top-10 right-10 w-64 h-64 bg-indigo-100/30 dark:bg-indigo-900/10 rounded-full blur-[100px]">
@@ -527,86 +626,149 @@
         </div>
     </section>
 
-    {{-- Biaya Pendidikan --}}
+    {{-- Biaya Pendidikan (4 Kartu Simetris) --}}
     <section id="biaya" class="py-24 bg-gray-50 dark:bg-gray-800/50 scroll-mt-24 relative overflow-hidden">
         <div
             class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-100/20 dark:bg-blue-900/10 rounded-full blur-[120px]">
         </div>
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16 max-w-3xl mx-auto">
-                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">Biaya
-                    Pendidikan</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400">Rincian biaya pendidikan selama menjadi santri di
-                    Pondok
-                    Pesantren RTQ Kawali.</p>
+                <span class="inline-block px-4 py-1.5 mb-3 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold uppercase tracking-widest">Informasi Finansial</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">Biaya Pendidikan</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400">Rincian biaya pendidikan selama menjadi santri di Pondok Pesantren RTQ Kawali.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {{-- Biaya Pendaftaran --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {{-- 1. Biaya Pendaftaran --}}
                 <div
-                    class="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-[0_10px_40px_rgba(0,32,69,0.05)] hover:shadow-[0_20px_60px_rgba(0,32,69,0.1)] transition-all duration-500 hover:-translate-y-1">
-                    <div
-                        class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6">
-                        <span class="text-2xl">📝</span>
+                    class="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-[0_10px_40px_rgba(0,32,69,0.05)] hover:shadow-[0_20px_60px_rgba(0,32,69,0.1)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mb-6">
+                            <span class="text-2xl">📝</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Pendaftaran</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Dibayar sebelum mengisi formulir</p>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Pendaftaran</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Dibayarkan satu kali saat mendaftar</p>
                     <div class="text-3xl font-extrabold text-gray-900 dark:text-white">Rp 500.000</div>
                 </div>
 
-                {{-- Biaya Awal Masuk --}}
+                {{-- 2. Biaya Awal Masuk --}}
                 <div
-                    class="bg-linear-to-br from-[#002045] to-[#1a365d] rounded-3xl p-8 shadow-xl relative overflow-hidden hover:-translate-y-1 transition-all duration-500">
+                    class="bg-linear-to-br from-[#002045] to-[#1a365d] rounded-3xl p-8 shadow-xl relative overflow-hidden hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
                     <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
-                    <div class="absolute -left-4 -top-4 w-20 h-20 bg-amber-400/10 rounded-full blur-xl"></div>
                     <div class="relative z-10">
                         <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-6">
                             <span class="text-2xl">🏫</span>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-1">Awal Masuk</h3>
-                        <p class="text-sm text-blue-200 mb-5">Dibayarkan jika dinyatakan LULUS</p>
-                        <div class="text-3xl font-extrabold text-white">Rp 3.000.000</div>
+                        <p class="text-sm text-blue-200 mb-5">Dibayar setelah dinyatakan LULUS oleh tim PPDB</p>
+                    </div>
+                    <div class="text-3xl font-extrabold text-white relative z-10">Rp 4.000.000</div>
+                </div>
+
+                {{-- 3. SPP / Syahriyah --}}
+                <div
+                    class="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-[0_10px_40px_rgba(0,32,69,0.05)] hover:shadow-[0_20px_60px_rgba(0,32,69,0.1)] transition-all duration-300 hover:-translate-y-1 relative overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center mb-6">
+                            <span class="text-2xl">🎓</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">SPP / Syahriyah</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Beasiswa Muhsinin</p>
+                    </div>
+                    <div class="text-3xl font-extrabold bg-linear-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
+                        Beasiswa
                     </div>
                 </div>
 
-                {{-- SPP / Syahriyah --}}
+                {{-- 4. Perlengkapan Belajar --}}
                 <div
-                    class="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-[0_10px_40px_rgba(0,32,69,0.05)] hover:shadow-[0_20px_60px_rgba(0,32,69,0.1)] transition-all duration-500 hover:-translate-y-1 relative overflow-hidden">
-                    <div class="absolute top-4 right-4">
-                        <span
-                            class="inline-block px-3 py-1 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-xs font-bold rounded-full uppercase tracking-wider">Beasiswa</span>
+                    class="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-[0_10px_40px_rgba(0,32,69,0.05)] hover:shadow-[0_20px_60px_rgba(0,32,69,0.1)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 bg-amber-100 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-6">
+                            <span class="text-2xl">📚</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Perlengkapan Belajar</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Dibayar saat awal masuk ma'had</p>
                     </div>
-                    <div
-                        class="w-14 h-14 bg-amber-100 dark:bg-amber-900/30 rounded-2xl flex items-center justify-center mb-6">
-                        <span class="text-2xl">🎓</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">SPP / Syahriyah</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Biaya bulanan selama menempuh pendidikan</p>
-                    <div
-                        class="text-3xl font-extrabold bg-linear-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">
-                        Beasiswa</div>
+                    <div class="text-3xl font-extrabold text-gray-900 dark:text-white">Rp 450.000</div>
                 </div>
             </div>
         </div>
     </section>
 
+    {{-- Informasi Tambahan (Tampilan List Biasa Rapi) --}}
+    <section id="info-tambahan" class="py-24 bg-white dark:bg-gray-900 scroll-mt-24 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12 max-w-2xl mx-auto">
+                <span class="inline-block px-4 py-1.5 mb-3 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold uppercase tracking-widest">Penting Diketahui</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white tracking-tight mb-3">Informasi Tambahan</h2>
+                <p class="text-sm lg:text-base text-gray-600 dark:text-gray-400">Hal-hal penting seputar kelembagaan, masa program, dan kurikulum pendidikan.</p>
+            </div>
+
+            {{-- List Biasa Sederhana & Tertata --}}
+            <div class="bg-gray-50 dark:bg-gray-800/60 rounded-3xl p-6 sm:p-10 border border-gray-100 dark:border-gray-700/60 shadow-sm">
+                <ol class="space-y-6">
+                    {{-- Poin 1 --}}
+                    <li class="flex items-start gap-4 pb-6 border-b border-gray-200/70 dark:border-gray-700/60">
+                        <span class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-bold text-sm flex items-center justify-center shrink-0 mt-0.5">1</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 dark:text-white text-base sm:text-lg mb-2">Seleksi dilakukan untuk mengisi kuota santri di 2 lembaga:</p>
+                            <ul class="space-y-2.5 mt-3 pl-1">
+                                <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300 text-sm sm:text-base">
+                                    <span class="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>
+                                    <span><strong>Markaz Tahfidz Icakan Ubay Bin Ka'ab</strong> (Cipaku, Ciamis)</span>
+                                </li>
+                                <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300 text-sm sm:text-base">
+                                    <span class="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>
+                                    <span><strong>Rumah Tahfidz Qur'an MGI Kawali</strong> (Kawali, Ciamis)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    {{-- Poin 2 --}}
+                    <li class="flex items-start gap-4 pb-6 border-b border-gray-200/70 dark:border-gray-700/60">
+                        <span class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-bold text-sm flex items-center justify-center shrink-0 mt-0.5">2</span>
+                        <p class="flex-1 text-gray-800 dark:text-gray-200 text-base sm:text-lg leading-relaxed pt-0.5">
+                            Kedua lembaga tersebut berada dalam <strong>naungan yang sama</strong> dan menjalankan <strong>program pembelajaran yang sama</strong>.
+                        </p>
+                    </li>
+
+                    {{-- Poin 3 --}}
+                    <li class="flex items-start gap-4 pb-6 border-b border-gray-200/70 dark:border-gray-700/60">
+                        <span class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-bold text-sm flex items-center justify-center shrink-0 mt-0.5">3</span>
+                        <p class="flex-1 text-gray-800 dark:text-gray-200 text-base sm:text-lg leading-relaxed pt-0.5">
+                            Program belajar berdurasi <strong>3 tahun masa pendidikan</strong> + <strong>1 tahun masa pengabdian</strong> (3 + 1 tahun).
+                        </p>
+                    </li>
+
+                    {{-- Poin 4 --}}
+                    <li class="flex items-start gap-4">
+                        <span class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-bold text-sm flex items-center justify-center shrink-0 mt-0.5">4</span>
+                        <p class="flex-1 text-gray-800 dark:text-gray-200 text-base sm:text-lg leading-relaxed pt-0.5">
+                            Bekerja sama dengan lembaga pendidikan kesetaraan / <strong>PKBM</strong> (Pusat Kegiatan Belajar Masyarakat), sehingga santri tetap dapat memperoleh ijazah pendidikan formal resmi.
+                        </p>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
     {{-- Kontak Panitia PPDB --}}
-    <section id="kontak" class="py-24 bg-white dark:bg-gray-900 scroll-mt-24 relative overflow-hidden">
+    <section id="kontak" class="py-24 bg-gray-50 dark:bg-gray-800/50 scroll-mt-24 relative overflow-hidden">
         <div class="absolute top-0 right-0 w-80 h-80 bg-blue-100/40 dark:bg-blue-900/10 rounded-full blur-[100px]"></div>
         <div class="absolute bottom-0 left-0 w-60 h-60 bg-emerald-100/30 dark:bg-emerald-900/10 rounded-full blur-[80px]">
         </div>
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-14">
-                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">Hubungi
-                    Panitia
-                    PPDB</h2>
-                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Silakan hubungi narahubung di
-                    masing-masing pondok untuk informasi lebih lanjut.</p>
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">Hubungi Panitia PPDB</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Silakan hubungi narahubung di masing-masing pondok untuk informasi lebih lanjut.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {{-- Card 1 — Pondok RTQ --}}
                 <div
-                    class="group relative bg-linear-to-br from-gray-50 to-white dark:from-gray-800/80 dark:to-gray-900 rounded-3xl p-10 shadow-[0_10px_40px_rgba(0,32,69,0.06)] hover:shadow-[0_20px_60px_rgba(0,32,69,0.12)] transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+                    class="group relative bg-white dark:bg-gray-900 rounded-3xl p-10 shadow-[0_10px_40px_rgba(0,32,69,0.06)] hover:shadow-[0_20px_60px_rgba(0,32,69,0.12)] transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-gray-100 dark:border-gray-800">
                     <div
                         class="absolute -right-6 -top-6 w-24 h-24 bg-gray-400/10 rounded-full blur-2xl group-hover:bg-gray-400/20 transition-colors">
                     </div>
@@ -661,9 +823,9 @@
                         </a>
                     </div>
                 </div>
-                {{-- Card 2 — Pondok Icakan --}}
+                {{-- Card 2 — MTQ Ubay bin Ka'ab (Ust. Fathur) --}}
                 <div
-                    class="group relative bg-linear-to-br from-gray-50 to-white dark:from-gray-800/80 dark:to-gray-900 rounded-3xl p-10 shadow-[0_10px_40px_rgba(0,32,69,0.06)] hover:shadow-[0_20px_60px_rgba(0,32,69,0.12)] transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+                    class="group relative bg-white dark:bg-gray-900 rounded-3xl p-10 shadow-[0_10px_40px_rgba(0,32,69,0.06)] hover:shadow-[0_20px_60px_rgba(0,32,69,0.12)] transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-gray-100 dark:border-gray-800">
                     <div
                         class="absolute -right-6 -top-6 w-24 h-24 bg-indigo-400/10 rounded-full blur-2xl group-hover:bg-indigo-400/20 transition-colors">
                     </div>
@@ -672,7 +834,7 @@
                             class="w-16 h-16 bg-[#25D366]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                             <div
                                 class="w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105">
-                                <img src="{{ asset('images/logo-icakan-500.png') }}" alt="Logo RTQ Kawali"
+                                <img src="{{ asset('images/logo-icakan-500.png') }}" alt="Logo MTQ Ubay bin Ka'ab"
                                     class="w-full h-full object-contain">
                             </div>
                         </div>
@@ -690,7 +852,7 @@
                                 </div>
                                 <div>
                                     <p class="text-xs text-gray-500 dark:text-gray-400">Narahubung</p>
-                                    <p class="font-semibold text-gray-900 dark:text-white">Ustadz Yudi Nurdani</p>
+                                    <p class="font-semibold text-gray-900 dark:text-white">Ust. Fathur</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
@@ -704,11 +866,11 @@
                                 </div>
                                 <div>
                                     <p class="text-xs text-gray-500 dark:text-gray-400">WhatsApp</p>
-                                    <p class="font-semibold text-gray-900 dark:text-white">+6281220749065</p>
+                                    <p class="font-semibold text-gray-900 dark:text-white">0813-9358-524</p>
                                 </div>
                             </div>
                         </div>
-                        <a href="https://wa.me/6281220749065" target="_blank"
+                        <a href="https://wa.me/628139358524" target="_blank"
                             class="mt-8 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#1ebd5b] transition-all duration-300 shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:scale-[1.02]">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                 <path

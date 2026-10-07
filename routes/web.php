@@ -205,6 +205,10 @@ Route::middleware(['auth', 'role:ustadz_ppdb'])->prefix('ustadz')->name('ustadz.
 // ============================================================
 // Misc
 // ============================================================
+Route::get('/ppdb/belum-dibuka', function () {
+    return view('ppdb.belum-dibuka');
+})->name('ppdb.belum-dibuka');
+
 Route::get('/ppdb/ditutup', function () {
     return view('ppdb.ditutup');
 })->name('ppdb.ditutup');

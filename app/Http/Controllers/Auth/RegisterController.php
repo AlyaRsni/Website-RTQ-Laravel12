@@ -10,16 +10,34 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
+    /**
+     * Tampilkan formulir pendaftaran akun PPDB.
+     * Saat ini diarahkan ke halaman 'ppdb.belum-dibuka'.
+     *
+     * CARA MENGEMBALIKAN KE HALAMAN ASLI:
+     * Cukup kembalikan ke:
+     *   if (Auth::check()) return redirect()->route('ppdb.dashboard');
+     *   return view('auth.register');
+     */
     public function showForm()
     {
+        // PPDB Belum Dibuka — Arahkan ke halaman pemberitahuan
+        return redirect()->route('ppdb.belum-dibuka');
+
+        /* === AKTIFKAN KEMBALI JIKA PENDAFTARAN SUDAH DIBUKA (1 NOVEMBER) ===
         if (Auth::check()) {
             return redirect()->route('ppdb.dashboard');
         }
         return view('auth.register');
+        =================================================================== */
     }
 
     public function register(Request $request)
     {
+        // Pendaftaran belum dibuka
+        return redirect()->route('ppdb.belum-dibuka');
+
+        /* === AKTIFKAN KEMBALI JIKA PENDAFTARAN SUDAH DIBUKA (1 NOVEMBER) ===
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => ['required', 'string', 'regex:/^08[0-9]{8,13}$/', 'unique:users,phone'],
@@ -46,5 +64,6 @@ class RegisterController extends Controller
         Auth::login($user);
 
         return redirect()->route('ppdb.dashboard')->with('success', 'Akun berhasil dibuat! Selamat datang di PPDB RTQ Kawali.');
+        =================================================================== */
     }
 }

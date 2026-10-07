@@ -59,7 +59,7 @@
                 <a href="{{ route('login') }}"
                     class="px-5 py-2.5 text-sm font-semibold text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-500 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-800 transition-all duration-200">Login
                     Santri</a>
-                <a href="{{ route('ppdb.register') }}"
+                <a href="{{ route('ppdb.belum-dibuka') }}"
                     class="px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-600/25 dark:shadow-blue-900/40 transition-all duration-200">Daftar
                     PPDB</a>
             </div>
@@ -122,7 +122,7 @@
             <a href="{{ route('login') }}"
                 class="w-full text-center px-5 py-2.5 text-sm font-semibold text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-500 rounded-xl hover:bg-blue-50 dark:hover:bg-gray-800 transition">Login
                 Santri</a>
-            <a href="{{ route('ppdb.register') }}"
+            <a href="{{ route('ppdb.belum-dibuka') }}"
                 class="w-full text-center px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-600/25 dark:shadow-blue-900/40 transition">Daftar
                 PPDB</a>
         </div>
