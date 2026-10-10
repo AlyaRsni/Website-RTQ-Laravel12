@@ -50,6 +50,9 @@
             <p class="mt-6 text-sm md:text-xl text-blue-200/80 max-w-2xl mx-auto font-light leading-relaxed">
                 Bergabunglah bersama kami membentuk generasi Qur'ani yang berakhlak mulia, cerdas, dan mandiri.
             </p>
+            <p class="mt-3 text-xs md:text-sm text-blue-200/70 font-light italic">
+                Di bawah binaan: Ustadz Abu Qotadah &amp; Ustadz Maman Suratman
+            </p>
 
             {{-- Tombol Daftar PPDB (Inline style & Hapus Tombol Hasil Seleksi Gelombang 1) --}}
             <div style="margin-top: 3rem; display: flex; justify-content: center;">
@@ -288,7 +291,7 @@
                             </div>
                             <p class="text-gray-700 dark:text-gray-300 text-base lg:text-lg leading-relaxed">Ikhwan (Usia
                                 15
-                                - 25 Tahun)
+                                - 21 Tahun)
                                 atau Minimal Lulusan SMP/MTs/Sederajat
                             </p>
                         </li>
@@ -314,7 +317,7 @@
                                 </svg>
                             </div>
                             <p class="text-gray-700 dark:text-gray-300 text-base lg:text-lg leading-relaxed">Membayar Uang
-                                PendaftaranSevesar Rp.500.000,
+                                Pendaftaran Sebesar Rp.500.000,
                                 Melalui transfer ke <span class="italic">Nomor rekening : </span> <br>
                                 <span class="font-bold"> Bank Syariah Indonesia (BSI) : 7232048063 <br>
                                     A.N : ASEP ZAM ZAMI ARIF </span> <br>
@@ -396,6 +399,14 @@
                             </div>
                             <p class="text-blue-50 text-lg">Bukti Uang Transaksi pendaftaran - dalam format PDF, ukuran
                                 tidak lebih dari 1 MB</p>
+                        </li>
+                       
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-1">
+                                <span class="text-white text-sm font-bold">4</span>
+                            </div>
+                            <p class="text-blue-50 text-lg">Surat Keterangan Kelakuan Baik - Dalam Format PDF, ukuran Tidak lebih dari 1 MB
+                                </p>
                         </li>
                     </ul>
                 </div>
@@ -548,7 +559,7 @@
     </section>
 
     {{-- Perlengkapan --}}
-    <section id="perlengkapan" class="py-24 bg-white dark:bg-gray-900 scroll-mt-24 relative overflow-hidden">
+    {{-- <section id="perlengkapan" class="py-24 bg-white dark:bg-gray-900 scroll-mt-24 relative overflow-hidden">
         <div class="absolute top-10 right-10 w-64 h-64 bg-indigo-100/30 dark:bg-indigo-900/10 rounded-full blur-[100px]">
         </div>
         <div class="absolute bottom-10 left-10 w-48 h-48 bg-pink-100/20 dark:bg-pink-900/10 rounded-full blur-[80px]">
@@ -624,7 +635,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     {{-- Biaya Pendidikan (4 Kartu Simetris) --}}
     <section id="biaya" class="py-24 bg-gray-50 dark:bg-gray-800/50 scroll-mt-24 relative overflow-hidden">

@@ -11,7 +11,8 @@
                     </div>
                     <div>
                         <span class="text-lg font-bold text-white block">RTQ Kawali</span>
-                        <span class="text-xs text-blue-400 font-medium">Pondok Pesantren</span>
+                        <span class="text-xs text-blue-400 font-medium block">Pondok Pesantren</span>
+                        <span class="text-xs text-gray-500 mt-1 block italic">Binaan: Ustadz Abu Qotadah &amp; Ustadz Maman Suratman</span>
                     </div>
                 </div>
                 <div class="space-y-3 text-sm">

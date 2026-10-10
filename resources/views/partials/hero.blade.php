@@ -24,7 +24,8 @@
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-6">
             Rumah Tahfidz Qur'an Kawali
         </h1>
-        <h3 class="text-lg sm:text-xl font-bold text-white leading-tight mb-6">Yayasan Mutiara Gema Insani</h3>
+        <h3 class="text-lg sm:text-xl font-bold text-white leading-tight mb-2">Yayasan Mutiara Gema Insani</h3>
+        <p class="text-sm sm:text-base text-blue-200/80 italic mb-6">Di bawah binaan: Ustadz Abu Qotadah &amp; Ustadz Maman Suratman</p>
 
         <p class="text-lg sm:text-xl text-blue-100/90 max-w-2xl mx-auto mb-10 leading-relaxed">
             Selamat datang di sistem informasi dan pendaftaran online Pondok Pesantren RTQ Kawali.
